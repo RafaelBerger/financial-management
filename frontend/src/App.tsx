@@ -1,7 +1,39 @@
 import Card from "./components/Card";
 import { PlusCircle } from "phosphor-react";
+import { useState } from "react";
+import testando from "./teste.js";
+import Modal from "react-modal";
 
 function App() {
+  const [teste, setTeste] = useState(testando);
+
+  let subtitle: any;
+  const [isOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   return (
     <>
       <div className="flex justify-center items-center w-screen h-screen">
@@ -28,17 +60,26 @@ function App() {
               weight="fill"
               className="cursor-pointer mt-4 mb-8"
             />
+            <Modal
+              isOpen={openModal}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <h1>Teste</h1>
+            </Modal>
           </div>
-          <Card
-            id={1}
-            description="Cerveja no mercado"
-            value={14.0}
-            positive={false}
-          />
-          <Card id={2} description="Freela" value={1000} positive={true} />
-          <Card id={3} description="Teclado" value={200.0} positive={false} />
-          <Card id={4} description="Chocolate" value={100.0} positive={false} />
-          <Card id={5} description="Trampo" value={3500.0} positive={true} />
+          {teste.map((task: any) => {
+            return (
+              <Card
+                id={task.id}
+                description={task.description}
+                value={task.value}
+                positive={task.positive}
+              />
+            );
+          })}
         </main>
       </div>
     </>
