@@ -1,5 +1,5 @@
 import Card from "./components/Card";
-import { PlusCircle } from "phosphor-react";
+import { PlusCircle, XCircle } from "phosphor-react";
 import { useState } from "react";
 import testando from "./teste.js";
 import Modal from "react-modal";
@@ -7,7 +7,6 @@ import Modal from "react-modal";
 function App() {
   const [teste, setTeste] = useState(testando);
 
-  let subtitle: any;
   const [isOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -16,26 +15,34 @@ function App() {
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
   }
 
   function closeModal() {
     setIsOpen(false);
   }
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
   return (
     <>
+      <Modal
+        isOpen={isOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        className="Modal"
+        overlayClassName="Overlay"
+        ariaHideApp={false}
+      >
+        <div className="w-full flex justify-end">
+          <XCircle
+            size={36}
+            color="#ffffff"
+            weight="fill"
+            className="cursor-pointer mr-2 mt-2"
+            onClick={closeModal}
+          />
+        </div>
+        <h1>Informe os dados necessários.</h1>
+      </Modal>
       <div className="flex justify-center items-center w-screen h-screen">
         <main className="bg-pers-100 w-3/4 h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
           <div className="w-full h-12 flex justify-center items-center">
@@ -59,20 +66,13 @@ function App() {
               color="#52b2db"
               weight="fill"
               className="cursor-pointer mt-4 mb-8"
+              onClick={openModal}
             />
-            <Modal
-              isOpen={openModal}
-              onAfterOpen={afterOpenModal}
-              onRequestClose={closeModal}
-              style={customStyles}
-              contentLabel="Example Modal"
-            >
-              <h1>Teste</h1>
-            </Modal>
           </div>
           {teste.map((task: any) => {
             return (
               <Card
+                key={task.id}
                 id={task.id}
                 description={task.description}
                 value={task.value}
