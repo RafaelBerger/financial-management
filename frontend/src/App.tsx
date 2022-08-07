@@ -1,20 +1,15 @@
 import Card from "./components/Card";
+import ModalCreation from "./components/ModalCreation";
 import { PlusCircle, XCircle } from "phosphor-react";
 import { useState } from "react";
 import testando from "./teste.js";
 import Modal from "react-modal";
 
 function App() {
-  const [teste, setTeste] = useState(testando);
-
   const [isOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
   }
 
   function closeModal() {
@@ -25,7 +20,6 @@ function App() {
     <>
       <Modal
         isOpen={isOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
         className="Modal"
@@ -41,10 +35,10 @@ function App() {
             onClick={closeModal}
           />
         </div>
-        <h1>Informe os dados necessários.</h1>
+        <ModalCreation />
       </Modal>
       <div className="flex justify-center items-center w-screen h-screen">
-        <main className="bg-pers-100 w-3/4 h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
+        <main className="bg-pers-100 w-3/4 max-w-7xl h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
           <div className="w-full h-12 flex justify-center items-center">
             julho de 2022 (data temporária)
           </div>
@@ -69,7 +63,7 @@ function App() {
               onClick={openModal}
             />
           </div>
-          {teste.map((task: any) => {
+          {testando.map((task: any) => {
             return (
               <Card
                 key={task.id}

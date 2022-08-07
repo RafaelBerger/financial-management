@@ -16,6 +16,7 @@ body {
   border-radius: 15px;
   background-color: #3a445d;
   color: white;
+  max-width: 800px;
 }
 
 .Overlay {
