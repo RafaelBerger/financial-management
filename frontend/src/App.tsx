@@ -63,17 +63,19 @@ function App() {
               onClick={openModal}
             />
           </div>
-          {testando.map((task: any) => {
-            return (
-              <Card
-                key={task.id}
-                id={task.id}
-                description={task.description}
-                value={task.value}
-                positive={task.positive}
-              />
-            );
-          })}
+          <div className="overflow-auto">
+            {testando.map((task: any) => {
+              return (
+                <Card
+                  key={task.id}
+                  id={task.id}
+                  description={task.description}
+                  value={task.value}
+                  positive={task.positive}
+                />
+              );
+            })}
+          </div>
         </main>
       </div>
     </>
