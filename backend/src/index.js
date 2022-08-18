@@ -14,5 +14,5 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  return res.json("deu bom");
+  return res.json({ teste: "teste" });
 });

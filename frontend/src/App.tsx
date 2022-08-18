@@ -51,7 +51,7 @@ function App() {
               Despesas: <span className="text-red-600">R$20,00</span>
             </p>
             <p className="text-base">
-              Saldo: <span className="text-green-400">R$180,00</span>
+              Saldo:<span className="text-green-400">R$180,00</span>
             </p>
           </div>
           <div className="w-full h-auto flex justify-center">
