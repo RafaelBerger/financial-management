@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 const ModalCreation = () => {
+  const [inputText, setInputText] = useState("");
+
+  function handleInputText(e: any) {
+    setInputText(e.target.value);
+    console.log(inputText);
+  }
+
   return (
     <>
       <h1 className="flex justify-center mt-8 mb-4">
@@ -10,6 +19,7 @@ const ModalCreation = () => {
           type="text"
           placeholder="Descrição"
           className="text-black w-2/4 p-2 rounded-md "
+          onChange={handleInputText}
         />
         <input
           type="number"
