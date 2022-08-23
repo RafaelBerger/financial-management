@@ -1,6 +1,7 @@
+require("./db/database");
 const express = require("express");
 const cors = require("cors");
-require("./db/database");
+const taskRouters = require("./router/tasksRouter");
 
 const app = express();
 
@@ -13,3 +14,6 @@ app.use(
     origin: "*",
   })
 );
+
+app.use(express.json());
+app.use("/", taskRouters);

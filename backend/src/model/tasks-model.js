@@ -1,8 +1,10 @@
-const { Sequelize, DataTypes } = require("Sequelize");
-const sequelize = new Sequelize();
+const { DataTypes } = require("Sequelize");
+require("dotenv").config();
+const sequelize = require("../db/database");
 
-module.exports = () => {
-  const Tasks = sequelize.define("Tasks", {
+const Tasks = sequelize.define(
+  "Tasks",
+  {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -25,5 +27,8 @@ module.exports = () => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-  });
-};
+  },
+  { timestamps: false, tableName: "tasks" }
+);
+
+module.exports = Tasks;
