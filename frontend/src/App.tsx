@@ -1,20 +1,28 @@
 import Card from "./components/Card";
 import ModalCreation from "./components/ModalCreation";
 import { PlusCircle, XCircle } from "phosphor-react";
-import { useState } from "react";
-import testando from "./teste.js";
+import { useState, useEffect } from "react";
+import { getAllTasks } from "./api/taskApi";
 import Modal from "react-modal";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    const callApi = async () => {
+      const response = await getAllTasks();
+      setTasks(response.data);
+    };
+    callApi();
+  }, []);
 
   return (
     <>
@@ -64,13 +72,13 @@ function App() {
             />
           </div>
           <div className="overflow-auto">
-            {testando.map((task: any) => {
+            {tasks.map((task: any) => {
               return (
                 <Card
                   key={task.id}
                   id={task.id}
-                  description={task.description}
-                  value={task.value}
+                  description={task.descriptions}
+                  value={task.money}
                   positive={task.positive}
                 />
               );
