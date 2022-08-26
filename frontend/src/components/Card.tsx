@@ -1,7 +1,7 @@
 import { PencilSimpleLine, Trash, XCircle } from "phosphor-react";
 import Modal from "react-modal";
 import { useState } from "react";
-import ModalCreation from "./ModalCreation";
+import ModalUpdate from "./ModalUpdate";
 
 interface CardProps {
   id: number;
@@ -42,7 +42,7 @@ const Card = (props: CardProps) => {
             onClick={closeModal}
           />
         </div>
-        <ModalCreation />
+        <ModalUpdate />
       </Modal>
       <article className="w-full flex items-center justify-between bg-pers-200 px-4 py-2 mb-3 rounded-lg">
         <div className="flex gap-4 items-center max-w-2xl">

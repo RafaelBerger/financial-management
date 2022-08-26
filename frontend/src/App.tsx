@@ -1,5 +1,5 @@
 import Card from "./components/Card";
-import ModalCreation from "./components/ModalCreation";
+import ModalCreation from "./components/ModalCreate";
 import { PlusCircle, XCircle } from "phosphor-react";
 import { useState, useEffect } from "react";
 import { getAllTasks } from "./api/taskApi";
