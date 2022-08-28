@@ -26,13 +26,18 @@ const ModalCreate = () => {
     console.log(inputDate);
   }
 
+  const dateCalendar = new Date()
+  const getMonth = dateCalendar.getMonth() + 1
+  const monthFormated = getMonth < 10 ? `0${getMonth}` : `${getMonth}`
+  const year = dateCalendar.getFullYear()
+  
   return (
     <>
       <h1 className="flex justify-center mt-8 mb-4">
         Informe os dados necessários para criar um card
       </h1>
       <form className="flex flex-col w-full h-3/5 justify-around items-center gap-4">
-        <input type="month" className="text-black w-2/4 p-2 rounded-md" onChange={handleInputDate}/>
+        <input type="month" max={`${year}-${monthFormated}`} className="text-black w-2/4 p-2 rounded-md" onChange={handleInputDate}/>
         <input
           type="text"
           placeholder="Descrição"
