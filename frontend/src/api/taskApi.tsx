@@ -6,3 +6,9 @@ export const getAllTasks = async () => {
   const response = await axios.get(`${BACKEND_URL}/tasks`);
   return response;
 };
+
+export const getBalance = async () => {
+  const response = await axios.get(`${BACKEND_URL}/balance`)
+  return response
+}
+
