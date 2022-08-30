@@ -14,6 +14,7 @@ function App() {
     //#endregion
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [balanceData, setBalanceData] = useState([])
   const [initialMonth, setInitialMonth] = useState(`${year}-${monthFormated}`);
 //#region
 function openModal() {
@@ -27,10 +28,14 @@ function closeModal() {
   useEffect(() => {
     const callApi = async () => {
       const response = await getAllTasks();
-      const response2 = await getBalance();
-      console.log(response2.data.gasto[0].money);
+      const responseBalance = await getBalance();
+      console.log(responseBalance);
+      console.log(response);
       
-      setTasks(response.data);
+      
+      setTasks(response);
+      setBalanceData(responseBalance)
+      
     };
     callApi();
   }, []);

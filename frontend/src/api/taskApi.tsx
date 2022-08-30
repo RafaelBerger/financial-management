@@ -4,11 +4,11 @@ const BACKEND_URL = "http://localhost:8080";
 
 export const getAllTasks = async () => {
   const response = await axios.get(`${BACKEND_URL}/tasks`);
-  return response;
+  return response.data;
 };
 
 export const getBalance = async () => {
   const response = await axios.get(`${BACKEND_URL}/balance`)
-  return response
+  return response.data
 }
 
