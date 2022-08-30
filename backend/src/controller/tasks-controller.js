@@ -1,4 +1,5 @@
 const Tasks = require("../model/tasks-model");
+const {Op} = require("sequelize");
 
 exports.GetTasksData = async (_req, res) => {
   try {
@@ -12,19 +13,17 @@ exports.GetTasksData = async (_req, res) => {
 exports.GetBalanceData = async (_req, res) => {
   try {
     const income = await Tasks.findAll({
-      attributes: ["money"],
+      attributes: ["money", "positive", "id"],
       where: {
-        positive: true
+        [Op.or]: [
+          {positive: true},
+          {positive: false},
+        ]
       }
-    })
-    const expense = await Tasks.findAll({
-      attributes: ["money"],
-      where: {
-        positive: false
-      }
-    })
-    
-    res.send({renda: income, gasto: expense })
+    }
+    )
+
+    res.send(income)
   } catch (error) {
     console.log(error)
   }
