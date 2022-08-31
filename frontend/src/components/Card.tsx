@@ -2,6 +2,7 @@ import { PencilSimpleLine, Trash, XCircle } from "phosphor-react";
 import Modal from "react-modal";
 import { useState } from "react";
 import ModalUpdate from "./ModalUpdate";
+import { deleteTask } from "../api/taskApi";
 
 interface CardProps {
   id: number;
@@ -22,6 +23,10 @@ const Card = (props: CardProps) => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const taskDeleteFunc = (id: CardProps) => {
+    deleteTask(id);
+  };
 
   return (
     <>
@@ -66,7 +71,15 @@ const Card = (props: CardProps) => {
               className="cursor-pointer rounded-full"
               onClick={openModal}
             />
-            <Trash size={32} color="#ffffff" className="cursor-pointer" />
+            <Trash
+              size={32}
+              color="#ffffff"
+              className="cursor-pointer"
+              onClick={() => {
+                taskDeleteFunc(props.id);
+                document.location.reload();
+              }}
+            />
           </div>
         </div>
       </article>
