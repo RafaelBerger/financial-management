@@ -24,7 +24,7 @@ const Tasks = sequelize.define(
       allowNull: false,
     },
     data_registro: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
   },
