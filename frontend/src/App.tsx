@@ -6,46 +6,38 @@ import { getAllTasks, getBalance } from "./api/taskApi";
 import Modal from "react-modal";
 
 function App() {
-    //#region 
-    const dateCalendar = new Date()
-    const getMonth = dateCalendar.getMonth() + 1
-    const monthFormated = getMonth < 10 ? `0${getMonth}` : `${getMonth}`
-    const year = dateCalendar.getFullYear()
-    //#endregion
+  //#region
+  const dateCalendar = new Date();
+  const getMonth = dateCalendar.getMonth() + 1;
+  const monthFormated = getMonth < 10 ? `0${getMonth}` : `${getMonth}`;
+  const year = dateCalendar.getFullYear();
+  //#endregion
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [balanceData, setBalanceData] = useState([])
   const [initialMonth, setInitialMonth] = useState(`${year}-${monthFormated}`);
-//#region
-function openModal() {
-  setIsOpen(true);
-}
-function closeModal() {
-  setIsOpen(false);
-}
-//#endregion
+  //#region
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  //#endregion
 
   useEffect(() => {
     const callApi = async () => {
       const response = await getAllTasks();
       const responseBalance = await getBalance();
-      console.log(responseBalance);
-      console.log(response);
-      
-      
+
       setTasks(response);
-      setBalanceData(responseBalance)
-      
     };
     callApi();
   }, []);
 
   function handleMonth(e: any) {
-    setInitialMonth(e.target.value)
+    setInitialMonth(e.target.value);
     console.log(initialMonth);
-    
-  } 
-
+  }
 
   return (
     <>
@@ -71,7 +63,13 @@ function closeModal() {
       <div className="flex justify-center items-center w-screen h-screen">
         <main className="bg-pers-100 w-3/4 max-w-7xl h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
           <div className="w-full h-12 flex justify-center items-center">
-            <input className="text-black rounded-md p-1 cursor-pointer" type="month" max={`${year}-${monthFormated}`} value={initialMonth} onChange={handleMonth} />
+            <input
+              className="text-black rounded-md p-1 cursor-pointer"
+              type="month"
+              max={`${year}-${monthFormated}`}
+              value={initialMonth}
+              onChange={handleMonth}
+            />
           </div>
           <div className="bg-gray-800 w-full h-auto flex justify-evenly mt-2 mb-2 rounded-md py-1">
             <p className="text-base">Itens: 20</p>
