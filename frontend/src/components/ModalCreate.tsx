@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { postTasks } from "../api/taskApi";
 
-const ModalCreate = () => {
+interface modalProps {
+  fetch: Function;
+}
+
+const ModalCreate = (props: modalProps) => {
   const [inputText, setInputText] = useState("");
   const [inputNumber, setInputNumber] = useState("");
   const [inputRadio, setInputRadio] = useState("");
@@ -104,8 +108,10 @@ const ModalCreate = () => {
         <button
           type="submit"
           className="w-auto py-2 px-10 rounded-lg bg-sky-500 hover:bg-sky-700 transition-colors"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             saveNewTask();
+            props.fetch();
           }}
         >
           Salvar
