@@ -7,8 +7,12 @@ export const getAllTasks = async () => {
   return response.data;
 };
 
-export const getBalance = async () => {
-  const response = await axios.get(`${BACKEND_URL}balance`);
+interface getMonthArgs {
+  dataMonth: string;
+}
+
+export const getMonthTasks = async (dataMonth: getMonthArgs) => {
+  const response = await axios.get(`${BACKEND_URL}month/:${dataMonth}`);
   return response.data;
 };
 

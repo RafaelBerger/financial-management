@@ -2,7 +2,7 @@ import Card from "./components/Card";
 import ModalCreation from "./components/ModalCreate";
 import { PlusCircle, XCircle } from "phosphor-react";
 import { useState, useEffect } from "react";
-import { getAllTasks, getBalance } from "./api/taskApi";
+import { getMonthTasks } from "./api/taskApi";
 import Modal from "react-modal";
 
 function App() {
@@ -14,7 +14,8 @@ function App() {
   //#endregion
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [initialMonth, setInitialMonth] = useState(`${year}-${monthFormated}`);
+  const [isFetched, setIsFetched] = useState(false);
+  const [isMonth, setIsMonth] = useState(`${year}-${monthFormated}`);
   //#region
   function openModal() {
     setIsOpen(true);
@@ -26,17 +27,25 @@ function App() {
 
   useEffect(() => {
     const callApi = async () => {
-      const response = await getAllTasks();
-      const responseBalance = await getBalance();
+      const responseMonthTasks = await getMonthTasks(isMonth);
+      setTasks(responseMonthTasks);
+      console.log(responseMonthTasks);
 
-      setTasks(response);
+      setIsFetched(false);
+      setIsOpen(false);
     };
     callApi();
-  }, []);
+  }, [isFetched]);
 
-  function handleMonth(e: any) {
-    setInitialMonth(e.target.value);
-    console.log(initialMonth);
+  async function handleMonth(e: any) {
+    setIsMonth(e.target.value);
+    const responseMonthTasks = await getMonthTasks(isMonth);
+    setTasks(responseMonthTasks);
+    setIsFetched(true);
+  }
+
+  function handleFetch() {
+    setIsFetched(true);
   }
 
   return (
@@ -58,7 +67,7 @@ function App() {
             onClick={closeModal}
           />
         </div>
-        <ModalCreation />
+        <ModalCreation fetch={handleFetch} />
       </Modal>
       <div className="flex justify-center items-center w-screen h-screen">
         <main className="bg-pers-100 w-3/4 max-w-7xl h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
@@ -67,7 +76,7 @@ function App() {
               className="text-black rounded-md p-1 cursor-pointer"
               type="month"
               max={`${year}-${monthFormated}`}
-              value={initialMonth}
+              value={isMonth}
               onChange={handleMonth}
             />
           </div>
@@ -93,14 +102,16 @@ function App() {
             />
           </div>
           <div className="overflow-auto">
-            {tasks.map((task: any) => {
+            {tasks.map((task: any, index: number) => {
               return (
                 <Card
                   key={task.id}
-                  id={task.id}
+                  id={index + 1}
+                  identificador={task.id}
                   description={task.descriptions}
                   value={task.money}
                   positive={task.positive}
+                  fetch={handleFetch}
                 />
               );
             })}
