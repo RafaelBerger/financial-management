@@ -9,6 +9,8 @@ interface CardProps {
   description: string;
   value: number;
   positive: boolean;
+  fetch: Function;
+  identificador: number;
 }
 
 const Card = (props: CardProps) => {
@@ -76,8 +78,8 @@ const Card = (props: CardProps) => {
               color="#ffffff"
               className="cursor-pointer"
               onClick={() => {
-                taskDeleteFunc(props.id);
-                document.location.reload();
+                taskDeleteFunc(props.identificador);
+                props.fetch();
               }}
             />
           </div>
