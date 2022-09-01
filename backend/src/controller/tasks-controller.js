@@ -1,12 +1,28 @@
 const Tasks = require("../model/tasks-model");
 const { Op } = require("sequelize");
 
-exports.GetTasksData = async (_req, res) => {
+exports.GetAllTasksData = async (_req, res) => {
   try {
     const GetData = await Tasks.findAll();
     res.send(GetData);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  }
+};
+
+exports.GetMonthTasksData = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const allTasksMonth = await Tasks.findAll({
+      where: {
+        data_registro: id,
+      },
+    });
+
+    res.status(200).send(allTasksMonth);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -21,7 +37,7 @@ exports.GetBalanceData = async (_req, res) => {
 
     res.send(income);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

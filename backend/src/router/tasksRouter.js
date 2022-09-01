@@ -1,14 +1,14 @@
 const {
-  GetTasksData,
-  GetBalanceData,
+  GetAllTasksData,
   CreateTasksData,
   DeleteTasksData,
+  GetMonthTasksData,
 } = require("../controller/tasks-controller");
 const express = require("express");
 const taskRouters = express.Router();
 
-taskRouters.get("/tasks", GetTasksData);
-taskRouters.get("/balance", GetBalanceData);
+taskRouters.get("/tasks", GetAllTasksData);
+taskRouters.get("/month/:id", GetMonthTasksData);
 taskRouters.post("/", CreateTasksData);
 taskRouters.delete("/:id", DeleteTasksData);
 
