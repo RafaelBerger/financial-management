@@ -47,3 +47,27 @@ export const deleteTask = async (id: deleteTaskArgs) => {
   const response = await axios.delete(BACKEND_URL + `${id}`);
   return response;
 };
+
+interface updateTaskArgs {
+  id: number;
+  descricao: string;
+  dinheiro: number;
+  positivo: boolean;
+  data: string;
+}
+
+export const updateTask = async (
+  id: updateTaskArgs,
+  descricao: updateTaskArgs,
+  dinheiro: updateTaskArgs,
+  positivo: updateTaskArgs,
+  data: updateTaskArgs
+) => {
+  const response = await axios.put(BACKEND_URL + `${id}`, {
+    description: descricao,
+    money: dinheiro,
+    positive: positivo,
+    data_registro: data,
+  });
+  return response;
+};
