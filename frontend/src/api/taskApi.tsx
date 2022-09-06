@@ -56,7 +56,7 @@ interface updateTaskArgs {
   data: string;
 }
 
-export const updateTask = async (
+export const updateTaskApi = async (
   id: updateTaskArgs,
   descricao: updateTaskArgs,
   dinheiro: updateTaskArgs,

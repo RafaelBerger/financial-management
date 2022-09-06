@@ -49,7 +49,12 @@ const Card = (props: CardProps) => {
             onClick={closeModal}
           />
         </div>
-        <ModalUpdate />
+        <ModalUpdate
+          id={props.id}
+          fetchUpdate={props.fetch}
+          identificadorUpdate={props.identificador}
+          fechaModal={closeModal}
+        />
       </Modal>
       <article className="w-full flex items-center justify-between bg-pers-200 px-4 py-2 mb-3 rounded-lg">
         <div className="flex gap-4 items-center max-w-2xl">

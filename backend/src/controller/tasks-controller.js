@@ -1,6 +1,5 @@
 const Tasks = require("../model/tasks-model");
 const { Op } = require("sequelize");
-const { where } = require("../db/database");
 
 exports.GetAllTasksData = async (_req, res) => {
   try {
