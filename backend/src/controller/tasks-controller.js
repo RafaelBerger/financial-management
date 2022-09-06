@@ -1,5 +1,6 @@
 const Tasks = require("../model/tasks-model");
 const { Op } = require("sequelize");
+const { where } = require("../db/database");
 
 exports.GetAllTasksData = async (_req, res) => {
   try {
@@ -58,5 +59,22 @@ exports.DeleteTasksData = async (req, res) => {
     },
   });
 
-  res.status(204).end();
+  res.status(200).end();
+};
+
+exports.UpdateTasksData = async (req, res) => {
+  const identificador = req.params.id;
+  const { description, money, positive, data_registro } = req.body;
+
+  await Tasks.update(
+    {
+      descriptions: description,
+      money: money,
+      positive: positive,
+      data_registro: data_registro,
+    },
+    { where: { id: identificador } }
+  );
+
+  res.status(200).end();
 };
