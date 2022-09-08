@@ -26,21 +26,6 @@ exports.GetMonthTasksData = async (req, res) => {
   }
 };
 
-exports.GetBalanceData = async (_req, res) => {
-  try {
-    const income = await Tasks.findAll({
-      attributes: ["money", "positive", "id"],
-      where: {
-        [Op.or]: [{ positive: true }, { positive: false }],
-      },
-    });
-
-    res.send(income);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 exports.CreateTasksData = async (req, res) => {
   const { id, descriptions, money, positive, data_registro } = req.body;
 
