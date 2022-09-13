@@ -16,6 +16,11 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [isFetched, setIsFetched] = useState(false);
   const [isMonth, setIsMonth] = useState(`${year}-${monthFormated}`);
+
+  const [numItens, setNumItens] = useState(0);
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
+  const [balance, setBalance] = useState(0);
   //#region
   function openModal() {
     setIsOpen(true);
@@ -25,11 +30,42 @@ function App() {
   }
   //#endregion
 
+  interface reduceValues {
+    positive: boolean;
+    money: number;
+  }
+
   useEffect(() => {
     const callApi = async () => {
       const responseMonthTasks = await getMonthTasks(isMonth);
       setTasks(responseMonthTasks);
-      console.log(responseMonthTasks);
+      setNumItens(responseMonthTasks.length);
+
+      const incomeValue = responseMonthTasks.reduce(
+        (prev: number, curr: reduceValues) => {
+          if (curr.positive) {
+            return curr.money + prev;
+          }
+          return prev;
+        },
+        0
+      );
+
+      const expenseValue = responseMonthTasks.reduce(
+        (prev: number, curr: reduceValues) => {
+          if (!curr.positive) {
+            return curr.money + prev;
+          }
+          return prev;
+        },
+        0
+      );
+
+      const balanceValue = incomeValue - expenseValue;
+
+      setBalance(balanceValue);
+      setExpense(expenseValue);
+      setIncome(incomeValue);
 
       setIsFetched(false);
       setIsOpen(false);
@@ -47,6 +83,7 @@ function App() {
   function handleFetch() {
     setIsFetched(true);
   }
+  console.log(tasks);
 
   return (
     <>
@@ -81,15 +118,20 @@ function App() {
             />
           </div>
           <div className="bg-gray-800 w-full h-auto flex justify-evenly mt-2 mb-2 rounded-md py-1">
-            <p className="text-base">Itens: 20</p>
+            <p className="text-base">Itens: {numItens} </p>
             <p className="text-base">
-              Receitas: <span className="text-green-400">R$200,00</span>
+              Receitas: <span className="text-green-400">R$ {income} </span>
             </p>
             <p className="text-base">
-              Despesas: <span className="text-red-600">R$20,00</span>
+              Despesas: <span className="text-red-600">R$ {expense} </span>
             </p>
             <p className="text-base">
-              Saldo: <span className="text-green-400">R$180,00</span>
+              Saldo:{" "}
+              <span
+                className={`${balance > 0 ? "text-green-400" : "text-red-600"}`}
+              >
+                R$ {balance}{" "}
+              </span>
             </p>
           </div>
           <div className="w-full h-auto flex justify-center">

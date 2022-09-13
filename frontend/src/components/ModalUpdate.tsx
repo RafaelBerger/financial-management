@@ -50,8 +50,6 @@ const ModalUpdate = (props: modalUpdateProps) => {
       return "";
     } else {
       await updateTaskApi(id, inputText, inputNumber, inputRadio, inputDate);
-      console.log("teste func update");
-      console.log(id, inputText, inputNumber, inputRadio, inputDate);
 
       setInputDate("");
       setInputText("");
