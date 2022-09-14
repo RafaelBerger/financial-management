@@ -11,7 +11,6 @@ const taskRouters = express.Router();
 
 taskRouters.get("/tasks", GetAllTasksData);
 taskRouters.get("/month/:id", GetMonthTasksData);
-taskRouters.get("/balance", GetBalanceData);
 
 taskRouters.post("/", CreateTasksData);
 
