@@ -83,7 +83,6 @@ function App() {
   function handleFetch() {
     setIsFetched(true);
   }
-  console.log(tasks);
 
   return (
     <>

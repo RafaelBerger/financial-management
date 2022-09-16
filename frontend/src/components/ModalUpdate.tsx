@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { updateTaskApi } from "../api/taskApi";
 
 interface modalUpdateProps {
@@ -14,16 +14,16 @@ interface modalUpdateProps {
 }
 
 const ModalUpdate = (props: modalUpdateProps) => {
-  const [inputText, setInputText] = useState("");
-  const [inputNumber, setInputNumber] = useState(0);
-  const [inputRadio, setInputRadio] = useState("");
-  const [inputDate, setInputDate] = useState("");
-
   const dataDaApi = new Date(props.dataCard);
   const monthDate = dataDaApi.getMonth() + 2;
   const monthDateFormat = monthDate < 10 ? `0${monthDate}` : `${monthDate}`;
   const yearDate = dataDaApi.getFullYear();
   const dataDaApiFormatada = `${yearDate}-${monthDateFormat}`;
+
+  const [inputText, setInputText] = useState(props.descriptionCard);
+  const [inputNumber, setInputNumber] = useState(props.valueCard);
+  const [inputRadio, setInputRadio] = useState(props.positiveCard);
+  const [inputDate, setInputDate] = useState(dataDaApiFormatada);
 
   function handleInputText(e: any) {
     setInputText(e.target.value);
@@ -38,7 +38,6 @@ const ModalUpdate = (props: modalUpdateProps) => {
   function handleInputRadio(e: any) {
     setInputRadio(e.target.value);
     console.log(inputRadio);
-    console.log(typeof inputRadio);
   }
 
   function handleInputDate(e: any) {
@@ -72,13 +71,6 @@ const ModalUpdate = (props: modalUpdateProps) => {
     }
   };
 
-  useEffect(() => {
-    setInputText(props.descriptionCard);
-    setInputNumber(props.valueCard);
-    setInputDate(dataDaApiFormatada);
-    setInputRadio(props.positiveCard.toString());
-  }, []);
-
   return (
     <>
       <h1 className="flex justify-center mt-8 mb-4">
@@ -107,8 +99,8 @@ const ModalUpdate = (props: modalUpdateProps) => {
           value={inputNumber}
         />
         <div
-          className="flex w-full justify-center gap-8"
           onChange={handleInputRadio}
+          className="flex w-full justify-center gap-8"
         >
           <div className="flex flex-col gap-4">
             <input
@@ -117,7 +109,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
               name="receita"
               value="true"
               className="text-black scale-[2]"
-              // defaultChecked={inputRadio === "true" ? true : false}
+              defaultChecked={inputRadio ? true : false}
             />
             <label htmlFor="ganho">Ganho</label>
           </div>
@@ -128,7 +120,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
               name="receita"
               value="false"
               className="text-black scale-[2]"
-              // defaultChecked={inputRadio === "false" ? false : true}
+              defaultChecked={inputRadio ? false : true}
             />
             <label htmlFor="gasto">Gasto</label>
           </div>
