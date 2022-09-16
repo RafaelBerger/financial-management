@@ -128,7 +128,9 @@ function App() {
             <p className="text-base">
               Saldo:{" "}
               <span
-                className={`${balance > 0 ? "text-green-400" : "text-red-600"}`}
+                className={`${
+                  balance >= 0 ? "text-green-400" : "text-red-600"
+                }`}
               >
                 R$ {balance}{" "}
               </span>
@@ -153,6 +155,7 @@ function App() {
                   description={task.descriptions}
                   value={task.money}
                   positive={task.positive}
+                  dataRegistro={task.data_registro}
                   fetch={handleFetch}
                 />
               );

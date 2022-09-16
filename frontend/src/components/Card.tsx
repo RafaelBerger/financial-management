@@ -11,6 +11,7 @@ interface CardProps {
   positive: boolean;
   fetch: Function;
   identificador: number;
+  dataRegistro: string;
 }
 
 const Card = (props: CardProps) => {
@@ -51,6 +52,10 @@ const Card = (props: CardProps) => {
         </div>
         <ModalUpdate
           id={props.id}
+          descriptionCard={props.description}
+          valueCard={props.value}
+          positiveCard={props.positive}
+          dataCard={props.dataRegistro}
           fetchUpdate={props.fetch}
           identificadorUpdate={props.identificador}
           fechaModal={closeModal}

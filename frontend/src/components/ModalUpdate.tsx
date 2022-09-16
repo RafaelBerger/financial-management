@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateTaskApi } from "../api/taskApi";
 
 interface modalUpdateProps {
   id: number;
   fetchUpdate: Function;
   fechaModal: Function;
+  identificadorUpdate: number;
+
+  descriptionCard: string;
+  valueCard: number;
+  positiveCard: boolean;
+  dataCard: string;
 }
 
 const ModalUpdate = (props: modalUpdateProps) => {
   const [inputText, setInputText] = useState("");
-  const [inputNumber, setInputNumber] = useState("");
+  const [inputNumber, setInputNumber] = useState(0);
   const [inputRadio, setInputRadio] = useState("");
   const [inputDate, setInputDate] = useState("");
+
+  const dataDaApi = new Date(props.dataCard);
+  const monthDate = dataDaApi.getMonth() + 2;
+  const monthDateFormat = monthDate < 10 ? `0${monthDate}` : `${monthDate}`;
+  const yearDate = dataDaApi.getFullYear();
+  const dataDaApiFormatada = `${yearDate}-${monthDateFormat}`;
 
   function handleInputText(e: any) {
     setInputText(e.target.value);
@@ -26,12 +38,14 @@ const ModalUpdate = (props: modalUpdateProps) => {
   function handleInputRadio(e: any) {
     setInputRadio(e.target.value);
     console.log(inputRadio);
+    console.log(typeof inputRadio);
   }
 
   function handleInputDate(e: any) {
     setInputDate(e.target.value);
     console.log(inputDate);
   }
+
   //#region calculo data
   const dateCalendar = new Date();
   const getMonth = dateCalendar.getMonth() + 1;
@@ -43,7 +57,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
     props.fechaModal();
     if (
       inputText === "" ||
-      inputNumber === "" ||
+      inputNumber === 0 ||
       inputRadio == "" ||
       inputDate == ""
     ) {
@@ -54,9 +68,16 @@ const ModalUpdate = (props: modalUpdateProps) => {
       setInputDate("");
       setInputText("");
       setInputRadio("");
-      setInputNumber("");
+      setInputNumber(0);
     }
   };
+
+  useEffect(() => {
+    setInputText(props.descriptionCard);
+    setInputNumber(props.valueCard);
+    setInputDate(dataDaApiFormatada);
+    setInputRadio(props.positiveCard.toString());
+  }, []);
 
   return (
     <>
@@ -69,18 +90,21 @@ const ModalUpdate = (props: modalUpdateProps) => {
           max={`${year}-${monthFormated}`}
           className="text-black w-2/4 p-2 rounded-md"
           onChange={handleInputDate}
+          value={inputDate}
         />
         <input
           type="text"
           placeholder="Descrição"
           className="text-black w-2/4 p-2 rounded-md "
           onChange={handleInputText}
+          value={inputText}
         />
         <input
           type="number"
           placeholder="Valor"
           className="text-black w-2/4 p-2 rounded-md"
           onChange={handleInputNumber}
+          value={inputNumber}
         />
         <div
           className="flex w-full justify-center gap-8"
@@ -93,6 +117,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
               name="receita"
               value="true"
               className="text-black scale-[2]"
+              // defaultChecked={inputRadio === "true" ? true : false}
             />
             <label htmlFor="ganho">Ganho</label>
           </div>
@@ -103,6 +128,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
               name="receita"
               value="false"
               className="text-black scale-[2]"
+              // defaultChecked={inputRadio === "false" ? false : true}
             />
             <label htmlFor="gasto">Gasto</label>
           </div>
@@ -113,7 +139,6 @@ const ModalUpdate = (props: modalUpdateProps) => {
           onClick={(e) => {
             e.preventDefault();
             updateTask(props.identificadorUpdate);
-            console.log("teste botão salvar");
 
             props.fetchUpdate();
           }}
